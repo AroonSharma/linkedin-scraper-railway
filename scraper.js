@@ -1,18 +1,14 @@
+// scraper.js
 require('dotenv').config();
 const puppeteer = require('puppeteer');
 const { createClient } = require('@supabase/supabase-js');
 const fs = require('fs');
 
-// 🔐 Supabase setup
-const supabaseUrl = 'https://nzzzuxzftjrodmtlfmpn.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56enp1eHpmdGpyb2RtdGxmbXBuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY2MDE3NDUsImV4cCI6MjA2MjE3Nzc0NX0.CBFWDudW6UwpJR2_TSkOV6dT_d7jUtMr70SspgxyZ8E';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-// 🍪 LinkedIn cookie
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 const linkedinCookies = [
   {
     name: 'li_at',
-    value: 'AQEDAQFOrqIEE2EkAAABloFc5ZAAAAGWyZ5KbVYAZPh4ErUTyfSID2eBmxhK-KKFUKu1wVZi64xM4hi5AvwqZcvdbsHDZor2nZxLa1k03fw9mnj33aCaNGe3_pz9UDQtPvqTUPImP03nn2Ugrk7GAJaQ',
+    value: process.env.LINKEDIN_COOKIE,
     domain: '.linkedin.com',
     path: '/',
     httpOnly: true,
@@ -20,17 +16,14 @@ const linkedinCookies = [
     sameSite: 'Lax',
   },
 ];
-
-// 💤 Custom delay
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-(async () => {
-  const browser = await puppeteer.launch({
-    headless: false,
-    defaultViewport: null,
-    args: ['--start-maximized'],
-    devtools: true,
-  });
+async function runScraper() {
+ const browser = await puppeteer.launch({
+  headless: true,
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
+
 
   const page = await browser.newPage();
   await page.setCookie(...linkedinCookies);
@@ -44,24 +37,21 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     const url = page.url();
     if (url.includes('/login')) {
-      console.error('❌ Not logged in – LinkedIn redirected to login page.');
-      console.log('🛑 Keeping browser open for inspection...');
-      await new Promise(() => {});
+      throw new Error('❌ Not logged in – LinkedIn redirected to login page.');
     }
 
     console.log('✅ Logged into LinkedIn successfully.');
   } catch (err) {
-    console.error('❌ LinkedIn feed page failed to load:', err.message);
-    console.log('🛑 Keeping browser open for inspection...');
-    await new Promise(() => {});
+    console.error('❌ LinkedIn login failed:', err.message);
+    await browser.close();
+    return;
   }
 
-  // 🎯 Fetch interest tags
   const { data: tags, error: tagError } = await supabase.from('interest_tags').select('tag');
-  console.log('📥 Tags from Supabase:', tags);
   if (tagError) {
     console.error('❌ Failed to fetch tags:', tagError.message);
-    await new Promise(() => {});
+    await browser.close();
+    return;
   }
 
   for (const tagObj of tags) {
@@ -107,11 +97,6 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     console.log(`📦 Found ${posts.length} posts for "${tag}"`);
     fs.writeFileSync(`posts-${tag}.json`, JSON.stringify(posts, null, 2));
 
-    if (posts.length === 0) {
-      console.log(`⚠️ No posts scraped for "${tag}".`);
-      continue;
-    }
-
     for (const post of posts) {
       console.log('⬇ Inserting post preview:', post.post_content.slice(0, 60));
       const { error } = await supabase.from('linkedin_posts').insert([post]);
@@ -123,6 +108,8 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     }
   }
 
-  console.log('🛑 Script done. Keeping browser open for inspection...');
-  await new Promise(() => {}); // ⛔ Infinite pause
-})();
+  console.log('✅ Scraper finished');
+  await browser.close();
+}
+
+module.exports = { runScraper };
