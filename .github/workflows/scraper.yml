@@ -1,0 +1,24 @@
+name: Run LinkedIn Scraper Twice Daily
+
+on:
+  schedule:
+    - cron: '0 4,16 * * *'  # 4 AM and 4 PM UTC = 9:30 AM & 9:30 PM IST
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run Scraper
+        run: node scraper.js
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          LI_AT_COOKIE: ${{ secrets.LI_AT_COOKIE }}
