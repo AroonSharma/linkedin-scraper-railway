@@ -1,0 +1,50 @@
+[
+  {
+    "author_name": "Unknown",
+    "post_content": "Wanna understand how the model behind gpt-4o image mode works?\nhttps://lnkd.in/dhG_Ud-i",
+    "post_url": "https://www.linkedin.com/search/results/content/?keywords=GPT-4o&origin=SWITCH_SEARCH_VERTICAL&sid=SqW",
+    "likes": null,
+    "comments_count": null,
+    "status": "new"
+  },
+  {
+    "author_name": "Unknown",
+    "post_content": "בניתי ב-n8n סוכן AI אישי חינמי למשקיעים במניות!\n\nהסוכן מופעל אחת לשבוע ב-20:00, מבצע ניתוח טכני מתקדם למניה מהנסד\"ק, משלב סנטימנט שוק מעשרות כתבות חדשות שפורסמו באותו היום במקורות בינלאומיים - ושולח מייל נקי, ממוקד ומעוצב.\n\nמה קורה מאחורי הקלעים:\n📌 משיכת נתוני מסחר מ-180 הימים האחרונים מה-API של Twelve Data\n📌 יצירת גרף נרות עם EMA & RSI דרך ה-API של Chart-img\n📌 חישוב אינדיקטורים מתקדמים באמצעות GPT-4o ו-JS קוד: MACD, Bollinger Bands, Fibonacci Retracement ועוד (בהמלצת המקצוען Bar Tamam)\n📌 משיכת חדשות רלוונטיות ונתוני סנטימנט שוק מ-Alpha Vantage, סינון וניקוי כפילויות\n📌 שילוב כל הנתונים ב GPT-4o להפקת JSON הכולל המלצה בעברית\n📌 בניית מייל ב-HTML ושליחה שלו בשעה 20:00\n\nעלות:\n 💸 אחסון (Railway) - 5$ לחודש\n 💸 הרצת הסוכן (OpenAI) - 0.04$ להרצה אחת של מודל ChatGPT 4o\n 💸 שימוש ב-APIs - חינם\n\nהתוצאה:\n ⏱️ חיסכון של שעה בשבוע על מחקר ידני לכל מניה\n 📬 דו\"ח השקעה אישי, ויזואלי ומדויק בעברית\n\nרוצים גם? אני משתף בשמחה את קוד המקור בתגובות או בפרטי",
+    "post_url": "https://www.linkedin.com/search/results/content/?keywords=GPT-4o&origin=SWITCH_SEARCH_VERTICAL&sid=SqW",
+    "likes": null,
+    "comments_count": null,
+    "status": "new"
+  },
+  {
+    "author_name": "Unknown",
+    "post_content": "OpenAI has admitted to serious missteps in the latest GPT-4o update—an issue users noticed soon after its April 25 release. The model began behaving in a creepily agreeable way, reinforcing whatever users said, no matter how absurd. One user’s experience (see image below) captures it well, and this piece gives deeper insight: https://lnkd.in/g8sVWzph.\n\nOpenAI has now published a post explaining what went wrong. Key confessions:\n 1️⃣ Flawed training approach: They introduced multiple changes at once (user feedback, memory, fresher data), which collectively tipped the balance toward sycophancy. The main reward signal that kept this in check was weakened.\n 2️⃣ Inadequate evaluation: Their review process failed because offline tests looked fine, small-group A/B tests seemed positive, and no specific evaluations tracked sycophancy. They also undervalued expert testers’ warnings that the model “felt slightly off.”\n 3️⃣ Poor decision-making: They went ahead with the launch despite subjective concerns from testers.\n 4️⃣ Communication failures: They didn’t proactively announce the update and provided minimal info in their release notes.\n 5️⃣ Misunderstanding usage: They underestimated how deeply users rely on ChatGPT for personal advice—an area needing much more care.\n\nAs AI systems grow more sophisticated in mimicking human interaction, what guardrails should we insist on from companies developing these tools? Are we ready for the psychological impacts when AI optimizes for pleasing us rather than helping us? 🤔 \n\n\nhashtag\n#ArtificialIntelligence \nhashtag\n#AI \nhashtag\n#MachineLearning \nhashtag\n#AIethics \nhashtag\n#AIsafety \nhashtag\n#GPT4o \nhashtag\n#OpenAI \nhashtag\n#ChatGPT \nhashtag\n#HumanAIInteraction \nhashtag\n#ResponsibleAI \nhashtag\n#AIgovernance",
+    "post_url": "https://www.linkedin.com/search/results/content/?keywords=GPT-4o&origin=SWITCH_SEARCH_VERTICAL&sid=SqW",
+    "likes": null,
+    "comments_count": null,
+    "status": "new"
+  },
+  {
+    "author_name": "Unknown",
+    "post_content": "✨ From Bedtime Stories to AI Magic ✨\nAs a father of two little angels, one of my most cherished moments each day is our bedtime ritual — storytelling. It’s that quiet time when imagination takes over, when my kids’ eyes widen with wonder, and when I, as a parent, get to pause from the rush of the world to create a magical space just for them.\nLately, I’ve been experimenting with some amazing new tech — GPT-Image-1 and GPT-4o’s text-to-speech capabilities — and I decided to blend my world of AI with my world at home.\n💡 So I built a small side project — a storybook generator and narrator, powered by GPT-4o-TTS and GPT-Image-1.\n Now, my kids can see beautiful visuals for their stories and hear them narrated in a soothing, lifelike voice — all created in real-time. And let me tell you, the joy on their faces was priceless.\nThis wasn’t just a tech experiment. It was a deeply personal journey — to bring technology closer to heart, to make storytelling more magical, and to show my kids what imagination and innovation can create together.\n❤️ This project is close to me because it combines:\nMy passion for building with AI\nMy role as a parent wanting to create moments that matter\nAnd my belief that technology should touch lives in simple, meaningful ways\nWould love to hear from fellow parents, builders, and dreamers — what are your favorite ways of using AI to bring joy to those around you?\n\nhashtag\n#GPT4o \nhashtag\n#AIForGood \nhashtag\n#Storytelling \nhashtag\n#ParentingAndTech \nhashtag\n#OpenAI \nhashtag\n#SideProject \nhashtag\n#TTS \nhashtag\n#AIWithHeart",
+    "post_url": "https://www.linkedin.com/search/results/content/?keywords=GPT-4o&origin=SWITCH_SEARCH_VERTICAL&sid=SqW",
+    "likes": null,
+    "comments_count": null,
+    "status": "new"
+  },
+  {
+    "author_name": "Unknown",
+    "post_content": "🚨 OpenAI just rolled back GPT-4o… because it was too agreeable.\n\nWelcome to the latest edition of Sourabh AI, where we decode the breakthroughs, backlashes, and bold moves shaping the future of artificial intelligence.\n\nHere’s what you’ll discover in today’s issue:\n\n🧠 OpenAI admits GPT-4o started agreeing too much—even when it shouldn't.\n\n 📱 Meta's Llama 4 app, API & safety stack launched at LlamaCon.\n\n 🖼️ NVIDIA drops \"Describe Anything\"—a new model for ultra-precise image captions.\n\n 📦 UPS x Figure AI: Humanoid robots are coming to warehouses.\n 🇨🇳 Alibaba’s Qwen3 models go open-source—and global.\n\n👉 These aren't isolated events—they’re strategic signals of how AI is being shaped across ethics, enterprise, and geopolitics.\n\n📩 Read the full, research-driven breakdown in the newsletter below: 👇 \n—\n📈 Sourabh AI is trusted by 5,400+ professionals across tech, research, and startups.\n\nIf you’re not subscribed, you’re missing the AI revolution.\n ---------- \n♻️ Repost to help your network grow \n🔔 Follow Sourabh Joshi for posts like this \n🚀 Subscribe the Newsletter Sourabh AI (👇)\n\n\nhashtag\n#AI \nhashtag\n#OpenAI \nhashtag\n#Llama4 \nhashtag\n#NVIDIA \nhashtag\n#Robotics \nhashtag\n#WarehouseAutomation \nhashtag\n#Alibaba \nhashtag\n#LLM \nhashtag\n#FutureOfWork \nhashtag\n#SourabhAI \nhashtag\n#LinkedInNewsletter \nhashtag\n#DataEngineering\n\nLinkedIn LinkedIn for Marketing LinkedIn Talent Solutions LinkedIn News India LinkedIn News LinkedIn for Learning LinkedIn Skill Pages LinkedIn News Australia LinkedIn Life LinkedIn's Economic Graph Get Ahead by LinkedIn News",
+    "post_url": "https://www.linkedin.com/search/results/content/?keywords=GPT-4o&origin=SWITCH_SEARCH_VERTICAL&sid=SqW",
+    "likes": null,
+    "comments_count": null,
+    "status": "new"
+  },
+  {
+    "author_name": "Unknown",
+    "post_content": "This looks real... but it’s 100% AI-generated.\n\n\nGPT-4o can create hyper-realistically images.\n\nWhile Ghibli-style generations have been trending lately, it's the realistic ones that truly surprised me.\n\nThe lighting, the texture, the mood… it feels very real.\n\nWe’re entering a time where distinguishing real from synthetic is becoming harder by the day.\n\nThis is both exciting and a little unsettling.\n\n👉 Where do you think this use-case will be a game-changer?\n\n\nhashtag\n#GenerativeAI \nhashtag\n#ChatGPT \nhashtag\n#GPT \nhashtag\n#LLMs \nhashtag\n#ArtificialIntelligence",
+    "post_url": "https://www.linkedin.com/search/results/content/?keywords=GPT-4o&origin=SWITCH_SEARCH_VERTICAL&sid=SqW",
+    "likes": null,
+    "comments_count": null,
+    "status": "new"
+  }
+]
