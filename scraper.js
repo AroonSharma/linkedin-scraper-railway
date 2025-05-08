@@ -1,7 +1,7 @@
+// scraper.js
 require('dotenv').config();
 const puppeteer = require('puppeteer');
 const { createClient } = require('@supabase/supabase-js');
-// const fs = require('fs'); // 🚫 Skip in Railway (optional)
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 const linkedinCookies = [
@@ -25,28 +25,25 @@ async function runScraper() {
   });
 
   const page = await browser.newPage();
-
   await page.setUserAgent(
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'
   );
 
   await page.setCookie(...linkedinCookies);
-
   console.log('🔐 Logging into LinkedIn...');
+
   try {
     await page.goto('https://www.linkedin.com/feed', {
       waitUntil: 'domcontentloaded',
       timeout: 60000,
     });
-
     const url = page.url();
     if (url.includes('/login')) {
       console.error('❌ Not logged in – LinkedIn redirected to login page.');
-      await page.screenshot({ path: 'login-failed.png' }); // optional
+      await page.screenshot({ path: 'login-failed.png' });
       await browser.close();
       return;
     }
-
     console.log('✅ Logged into LinkedIn successfully.');
   } catch (err) {
     console.error('❌ LinkedIn login failed:', err.message);
@@ -62,24 +59,26 @@ async function runScraper() {
   }
 
   for (const tagObj of tags) {
-    const tag = tagObj.tag;
-    const searchUrl = `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(tag)}&origin=SWITCH_SEARCH_VERTICAL`;
+    const tag = tagObj.tag.trim();
+    if (!tag) continue;
 
+    const searchUrl = `https://www.linkedin.com/search/results/content/?keywords=${encodeURIComponent(tag)}`;
     console.log(`🔍 Searching for tag: ${tag}`);
+
     try {
       await page.goto(searchUrl, {
         waitUntil: 'domcontentloaded',
         timeout: 60000,
       });
-      await sleep(3000);
+      await sleep(4000);
     } catch (err) {
       console.error(`❌ Failed to load search for tag "${tag}":`, err.message);
       continue;
     }
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 5; i++) {
       await page.evaluate(() => window.scrollBy(0, window.innerHeight));
-      await sleep(2000);
+      await sleep(3000);
     }
 
     const posts = await page.evaluate(() => {
@@ -102,11 +101,6 @@ async function runScraper() {
     });
 
     console.log(`📦 Found ${posts.length} posts for "${tag}"`);
-
-    // ⚠️ Skip writing to disk on Railway
-    // if (posts.length > 0) {
-    //   fs.writeFileSync(`posts-${tag}.json`, JSON.stringify(posts, null, 2));
-    // }
 
     for (const post of posts) {
       console.log('⬇ Inserting post preview:', post.post_content.slice(0, 60));
