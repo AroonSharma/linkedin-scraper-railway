@@ -1,8 +1,7 @@
-// scraper.js
 require('dotenv').config();
 const puppeteer = require('puppeteer');
 const { createClient } = require('@supabase/supabase-js');
-const fs = require('fs');
+// const fs = require('fs'); // 🚫 Skip in Railway (optional)
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 const linkedinCookies = [
@@ -19,13 +18,18 @@ const linkedinCookies = [
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 async function runScraper() {
- const browser = await puppeteer.launch({
-  headless: true,
-  args: ['--no-sandbox', '--disable-setuid-sandbox']
-});
-
+  console.log('🚀 Launching browser...');
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
 
   const page = await browser.newPage();
+
+  await page.setUserAgent(
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'
+  );
+
   await page.setCookie(...linkedinCookies);
 
   console.log('🔐 Logging into LinkedIn...');
@@ -37,7 +41,10 @@ async function runScraper() {
 
     const url = page.url();
     if (url.includes('/login')) {
-      throw new Error('❌ Not logged in – LinkedIn redirected to login page.');
+      console.error('❌ Not logged in – LinkedIn redirected to login page.');
+      await page.screenshot({ path: 'login-failed.png' }); // optional
+      await browser.close();
+      return;
     }
 
     console.log('✅ Logged into LinkedIn successfully.');
@@ -95,7 +102,11 @@ async function runScraper() {
     });
 
     console.log(`📦 Found ${posts.length} posts for "${tag}"`);
-    fs.writeFileSync(`posts-${tag}.json`, JSON.stringify(posts, null, 2));
+
+    // ⚠️ Skip writing to disk on Railway
+    // if (posts.length > 0) {
+    //   fs.writeFileSync(`posts-${tag}.json`, JSON.stringify(posts, null, 2));
+    // }
 
     for (const post of posts) {
       console.log('⬇ Inserting post preview:', post.post_content.slice(0, 60));
