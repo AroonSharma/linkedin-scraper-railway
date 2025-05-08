@@ -1,15 +1,20 @@
-const cors = require('cors');
-app.use(cors());
 const express = require('express');
-const { runScraper } = require('./scraper'); // make sure you move scraper logic into scraper.js
+const cors = require('cors');
+const { runScraper } = require('./scraper');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+app.use(cors());
 app.use(express.json());
 
 app.post('/scrape-now', async (req, res) => {
-  console.log('🔥 Received /scrape-now request');
-  res.status(200).send('✅ Server is alive and received your request!');
+  try {
+    await runScraper();
+    res.status(200).send('✅ Scraping completed successfully!');
+  } catch (err) {
+    console.error('❌ Scraping failed:', err.message);
+    res.status(500).send('Error occurred during scraping.');
+  }
 });
 
 app.get('/', (req, res) => res.send('LinkedIn scraper is live 🚀'));
