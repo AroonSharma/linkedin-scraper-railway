@@ -4,6 +4,7 @@ const puppeteer = require('puppeteer');
 const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+
 const linkedinCookies = [
   {
     name: 'li_at',
@@ -15,6 +16,7 @@ const linkedinCookies = [
     sameSite: 'Lax',
   },
 ];
+
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 async function runScraper() {
@@ -37,6 +39,7 @@ async function runScraper() {
       waitUntil: 'domcontentloaded',
       timeout: 60000,
     });
+
     const url = page.url();
     if (url.includes('/login')) {
       console.error('❌ Not logged in – LinkedIn redirected to login page.');
@@ -44,6 +47,7 @@ async function runScraper() {
       await browser.close();
       return;
     }
+
     console.log('✅ Logged into LinkedIn successfully.');
   } catch (err) {
     console.error('❌ LinkedIn login failed:', err.message);
@@ -83,20 +87,37 @@ async function runScraper() {
 
     const posts = await page.evaluate(() => {
       const results = [];
-      const nodes = document.querySelectorAll('[class*="update-components-text"]');
-      nodes.forEach((node) => {
-        const text = node.innerText?.trim();
-        if (text && text.length > 30) {
+
+      const containers = document.querySelectorAll('[data-urn][class*="search-content"]');
+      containers.forEach(container => {
+        const textNode = container.querySelector('[class*="update-components-text"]');
+        const authorNode = container.querySelector('span[class*="feed-shared-actor__name"]') || container.querySelector('span[class*="entity-result__title-text"]');
+        const socialCounts = container.querySelector('[class*="social-details-social-counts"]');
+
+        const text = textNode?.innerText?.trim();
+        const author = authorNode?.innerText?.trim() || 'Unknown';
+
+        const likesMatch = socialCounts?.innerText?.match(/(\d+(,\d{3})*|\d+)\s+like/) || [];
+        const commentsMatch = socialCounts?.innerText?.match(/(\d+(,\d{3})*|\d+)\s+comment/) || [];
+
+        const likes = parseInt(likesMatch[1]?.replace(/,/g, '')) || 0;
+        const comments = parseInt(commentsMatch[1]?.replace(/,/g, '')) || 0;
+
+        const postAnchor = container.querySelector('a[href*="/feed/update/"]');
+        const postUrl = postAnchor?.href || '';
+
+        if (text && postUrl) {
           results.push({
-            author_name: 'Unknown',
+            author_name: author,
             post_content: text,
-            post_url: window.location.href,
-            likes: null,
-            comments_count: null,
+            post_url: postUrl,
+            likes,
+            comments_count: comments,
             status: 'new',
           });
         }
       });
+
       return results;
     });
 
